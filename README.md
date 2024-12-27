@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Vedanta_Datasets
 This repository contains datasets from various texts relevant to Vedanta which can be used for ML analysis.
 
@@ -24,3 +25,6 @@ http://www.sanskrit-linguistics.org/dcs/index.php
 http://sanskrit.jnu.ac.in/index.jsp
 
 
+=======
+# NYD_Hackathon
+>>>>>>> 632c228d4104cc9e1ec31ada1d2047d2e6e97a3f
