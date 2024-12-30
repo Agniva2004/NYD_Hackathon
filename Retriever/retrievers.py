@@ -15,7 +15,7 @@ warnings.filterwarnings("ignore")
 
 class FusionRetrieval:
     def __init__(self, splitter=None, chunk_size=256, vector_top_k=5, bm25_top_k=10, fusion_weights=[0.6, 0.4], fusion_top_k=10, mode="relative_score", num_queries=1, use_async=True, verbose=False):
-        embedding_model = HuggingFaceEmbedding(model_name="Matej/bert-base-buddhist-sanskrit")
+        embedding_model = HuggingFaceEmbedding(model_name="BAAI/bge-small-en-v1.5")
         Settings.embed_model = embedding_model
         Settings.llm = Groq(model="llama3-8b-8192", api_key=os.getenv("GROQ_API_KEY"))
         self.splitter = splitter or SentenceSplitter(chunk_size=chunk_size)
@@ -100,4 +100,5 @@ if __name__ == "__main__":
     results = fusion.retrieve("Time periods of past and future are inherent in the underlying foundation of the universe")
     for result in results:
         print(f"Score: {result.score:.2f} - {result.text[:100]}...\n-----")
+    
 
