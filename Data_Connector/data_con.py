@@ -32,7 +32,7 @@ llm = ChatGroq(
 
 def generate_augmented_data(row):
     user_input = (
-        f"Chapter: {row['chapter']}, Verse: {row['verse']}, Speaker: {row['speaker']}\n"
+        f"Chapter: {row['chapter']}, Verse: {row['verse']}\n"
         f"Translation: {row['translation']}\n"
         f"Question: {row['question']}"
     )
@@ -83,7 +83,7 @@ def process_csv(input_csv, output_csv):
     df.to_csv(output_csv, index=False)
 
 if __name__ == "__main__":
-    input_csv = r'C:\Users\Anushree\Desktop\NYD\NYD_Hackathon\Data\Bhagwad_Gita\Bhagwad_Gita_Verses_English_Questions.csv' 
-    output_csv = r'C:\Users\Anushree\Desktop\NYD\NYD_Hackathon\Data\Bhagwad_Gita\Bhagwad_Gita_Verses_English_augmented_appended.csv'  
+    input_csv = r'C:\Users\Anushree\Desktop\NYD\NYD_Hackathon\Data\Patanjali_Yoga_Sutras\Patanjali_Yoga_Sutras_Verses_English_Questions.csv' 
+    output_csv = r'C:\Users\Anushree\Desktop\NYD\NYD_Hackathon\Data\Patanjali_Yoga_Sutras\Patanjali_Yoga_Sutras_Verses_English_Questions_augmented_appended.csv'  
 
     process_csv(input_csv, output_csv)
