@@ -10,7 +10,7 @@ from llama_index.core.postprocessor import SentenceTransformerRerank
 class Rerankers:
     def __init__(self):
         load_dotenv()
-        Settings.embed_model = HuggingFaceEmbedding(model_name="Matej/bert-base-buddhist-sanskrit")
+        Settings.embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-reranker-v2-m3")
         Settings.llm = Groq(model="llama3-8b-8192", api_key=os.getenv("GROQ_API_KEY"))
         
     def get_cohere_reranker(self, top_n=5):
