@@ -1,0 +1,10 @@
+llama-index
+python-dotenv
+transformers
+torch
+datasets
+huggingface-hub
+scikit-learn
+numpy
+groq
+pandas
