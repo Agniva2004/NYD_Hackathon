@@ -13,18 +13,23 @@ from llama_index.core.tools import QueryEngineTool, ToolMetadata
 from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core import Settings
 from llama_index.core.agent import AgentRunner
-from llama_index.agent.coa import CoAAgentWorker
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.tools.tavily_research.base import TavilyToolSpec
 from llama_index.llms.groq import Groq
 from ReRanker.rerankers import Rerankers
+from llama_index.core.agent import ReActAgent
+from llama_index.core.tools import QueryPlanTool
+from llama_index.core import get_response_synthesizer
 
-class RetrievalAgent:
+
+class React_Agent:
     def __init__(self):
         self.query_engine_tools = []
         self._setup_models()
         self.reranker = Rerankers()
         self.colbert_reranker = self.reranker.get_colbert_reranker()
+        self.response_synthesizer = get_response_synthesizer()
+        self.query_plan_tool = None
         
 
     def _setup_models(self) -> None:
@@ -37,6 +42,8 @@ class RetrievalAgent:
         Settings.embed_model = HuggingFaceEmbedding(
             model_name="BAAI/bge-small-en-v1.5"
         )
+        self.llm = Settings.llm
+
 
     def setup_yoga_sutras_tool(self, base_folder_path: str) -> None:
         connector = DataConnector(base_folder_path=base_folder_path)
@@ -69,6 +76,11 @@ class RetrievalAgent:
                     )
                 )
 
+    def setup_query_plan_tool(self) -> None:
+        self.query_plan_tool = QueryPlanTool.from_defaults(
+            query_engine_tools=self.query_engine_tools,
+            response_synthesizer=self.response_synthesizer,
+        )
 
     def print_tools(self) -> None:
         for tool in self.query_engine_tools:
@@ -76,27 +88,34 @@ class RetrievalAgent:
                 print(f"Tool Name: {tool.metadata.name}")
                 print(f"Description: {tool.metadata.description}\n")
 
-    def setup_agent(self) -> CoAAgentWorker:
-        return CoAAgentWorker.from_tools(
-            tools=self.query_engine_tools,
-            llm=Settings.llm,
-            verbose=True
+    def setup_agent(self):
+       agent = ReActAgent.from_tools(
+            self.query_engine_tools,
+            llm=self.llm,
+            max_function_calls=10,
+            verbose=True,
         )
+       return agent
+   
+
+   
 
 def main():
-    agent_retrieval = RetrievalAgent()
+    agent = React_Agent()
     
-    agent_retrieval.setup_yoga_sutras_tool("../Data")
+    agent._setup_models()
     
-    agent_retrieval.print_tools()
+    agent.setup_yoga_sutras_tool("../Data")
     
-    worker = agent_retrieval.setup_agent()
-    agent = worker.as_agent()
+    agent.setup_query_plan_tool()
     
-    answer = agent.chat("What are the methods to achieve the goal of Yoga? What are the methods to quieten the fluctuations of the mind? What are the means to calm your thoughts? What is the importance of practice and dispassion?")
-    print("\nAgent Response:")
-    print(str(answer))
+    react_agent = agent.setup_agent()
+    
+    question = "What is the purpose of yoga?"
+    
+    response = react_agent.chat(question)
 
+    print(str(response))
+    
 if __name__ == "__main__":
     main()
-
