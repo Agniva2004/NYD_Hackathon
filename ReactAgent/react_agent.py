@@ -16,18 +16,24 @@ from llama_index.core.agent import AgentRunner
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.tools.tavily_research.base import TavilyToolSpec
 from llama_index.llms.groq import Groq
-from ReRanker.rerankers import Rerankers
+# from ReRanker.rerankers import Rerankers
 from llama_index.core.agent import ReActAgent
 from llama_index.core.tools import QueryPlanTool
 from llama_index.core import get_response_synthesizer
+from llama_index.embeddings.fastembed import FastEmbedEmbedding
+from llama_index.core.memory import (
+    VectorMemory,
+    SimpleComposableMemory,
+    ChatMemoryBuffer,
+)
 
 
 class React_Agent:
     def __init__(self):
         self.query_engine_tools = []
         self._setup_models()
-        self.reranker = Rerankers()
-        self.colbert_reranker = self.reranker.get_colbert_reranker()
+        #self.reranker = Rerankers()
+        #self.colbert_reranker = self.reranker.get_colbert_reranker()
         self.response_synthesizer = get_response_synthesizer()
         self.query_plan_tool = None
         
@@ -51,7 +57,7 @@ class React_Agent:
         for subfolder in os.listdir(base_folder_path):
             subfolder_path = os.path.join(base_folder_path, subfolder)
             
-            if os.path.isdir(subfolder_path):
+            if os.path.isdir(subfolder_path) and subfolder=="Patanjali_Yoga_Sutras":
                 documents = connector.fetch_files_with_llamaindex(subfolder)
                 
                 fusion = FusionRetrieval(
@@ -88,34 +94,80 @@ class React_Agent:
                 print(f"Tool Name: {tool.metadata.name}")
                 print(f"Description: {tool.metadata.description}\n")
 
+    def setup_memory(self) -> None:
+        vector_memory = VectorMemory.from_defaults(
+            vector_store=None,
+            embed_model=Settings.embed_model,
+            retriever_kwargs={"similarity_top_k": 5},
+        )
+        chat_memory_buffer = ChatMemoryBuffer.from_defaults()
+
+        self.memory = SimpleComposableMemory.from_defaults(
+            primary_memory=chat_memory_buffer,
+            secondary_memory_sources=[vector_memory],
+        )    
+          
+
     def setup_agent(self):
        agent = ReActAgent.from_tools(
             self.query_engine_tools,
             llm=self.llm,
             max_function_calls=10,
+            memory = self.memory,
             verbose=True,
         )
        return agent
+
+    # def memory(self):
+    #     vector_memory = VectorMemory.from_defaults(
+    #     vector_store=None,  # leave as None to use default in-memory vector store
+    #     embed_model=Oembed_model = FastEmbedEmbedding(model_name="BAAI/bge-small-en-v1.5"),
+    #     retriever_kwargs={"similarity_top_k": 2},
+    #     )
+
+    #     chat_memory_buffer = ChatMemoryBuffer.from_defaults()
+
+    #     composable_memory = SimpleComposableMemory.from_defaults(
+    #     primary_memory=chat_memory_buffer,
+    #     secondary_memory_sources=[vector_memory],
+    #     )  
+    #     llm = OpenAI(model="gpt-3.5-turbo-0613")
+
+    #     composable_memory = SimpleComposableMemory.from_defaults(
+    #     primary_memory=ChatMemoryBuffer.from_defaults(),
+    #     secondary_memory_sources=[
+    #     vector_memory.copy(
+    #         deep=True
+    #     )  # using a copy here for illustration purposes
+    #     # later will use original vector_memory again
+    #     ],
+    #     )
+    #     agent = ReActAgent.from_tools(
+    #         self.query_engine_tools,
+    #         llm=self.llm,
+    #         max_function_calls=10,
+    #         memory = self.memory,
+    #         verbose=True,
+    #     )
+    #    return agent
    
 
    
 
 def main():
-    agent = React_Agent()
-    
-    agent._setup_models()
-    
-    agent.setup_yoga_sutras_tool("../Data")
-    
-    agent.setup_query_plan_tool()
-    
-    react_agent = agent.setup_agent()
-    
-    question = "What is the purpose of yoga?"
-    
-    response = react_agent.chat(question)
+    agent_instance = React_Agent()
 
-    print(str(response))
-    
+    base_data_path = "../Data"  
+    agent_instance.setup_yoga_sutras_tool(base_folder_path=base_data_path)
+
+    agent_instance.setup_memory()
+
+    function_calling_agent = agent_instance.setup_agent()
+
+    question = "Define memory? What is memory?"
+    response = function_calling_agent.chat(question)
+
+    print(function_calling_agent.chat_history)
+
 if __name__ == "__main__":
     main()
