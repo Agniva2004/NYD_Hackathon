@@ -15,6 +15,7 @@ from grader_agent import Grader
 from question_rewriter import QuestionRewriter
 from abstractor_agent import Abstractor
 from pprint import pprint
+from ReactAgent.react_agent import React_Agent
 from langgraph.graph import END
 import os
 os.environ["TAVILY_API_KEY"] = "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"
@@ -89,6 +90,14 @@ class ADAPTIVE_RAG:
         self.rag_chain = hub.pull("rlm/rag-prompt") | self.llm | StrOutputParser()
         self.recursion_limit = 7
         self.recursion_counter = 0
+        agent_instance = React_Agent()
+
+        base_data_path = "../Data"  
+        agent_instance.setup_yoga_sutras_tool(base_folder_path=base_data_path)
+
+        agent_instance.setup_memory()
+
+        self.function_calling_agent = agent_instance.setup_agent()
     def retrieve(self, state):
         question = state["question"]
         documents = self.retriever.invoke(question)   
@@ -166,6 +175,11 @@ class ADAPTIVE_RAG:
         else:
             pprint("---DECISION: GENERATION IS NOT GROUNDED IN DOCUMENTS, RE-TRY---")
             return "not supported"
+        
+    def react_agent_response(self, state):
+        question = state["question"]
+        response = self.function_calling_agent.chat(question)
+        return {"generation": str(response)}
         
     def track_recursion_and_retrieve(self, state):
         """

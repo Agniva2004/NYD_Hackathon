@@ -2,10 +2,16 @@
 from pprint import pprint
 from adaptive_rag_class import ADAPTIVE_RAG
 from stategraph import GraphState
-
+from ReactAgent.react_agent import React_Agent
 from langgraph.graph import END, StateGraph, START
+
+
+    
+
 class Workflow:
     def __init__(self, model, embd_model, api_key, k, csv_path):
+
+
         self.adaptive_rag = ADAPTIVE_RAG(model, embd_model, api_key, k, csv_path)
         self.workflow = StateGraph(GraphState)
         
@@ -18,6 +24,7 @@ class Workflow:
         self.workflow.add_node("abstraction", self.adaptive_rag.abstraction)  # abstraction
         self.workflow.add_node("track_recursion", self.adaptive_rag.track_recursion_and_retrieve)  # track recursion
         self.workflow.add_node("end_due_to_limit", self.adaptive_rag.end_due_to_limit)  # End node when recursion limit is reached
+        self.workflow.add_node("react_agent_response", self.adaptive_rag.react_agent_response())
 
         self.workflow.add_conditional_edges(
             START,
@@ -50,11 +57,12 @@ class Workflow:
             "generate",
             self.adaptive_rag.grade_generation_v_documents_and_question,
             {
-                "not supported": "generate",
+                "not supported": "react_agent_response",
                 "useful": END,
                 "not useful": "transform_query",
             },
         )
+        self.workflow.add_edge("react_agent_response", END)
         self.app = self.workflow.compile()
 
     def build_workflow(self):
