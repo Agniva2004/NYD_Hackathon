@@ -9,6 +9,10 @@ from langchain_groq import ChatGroq
 from langchain_core.output_parsers import StrOutputParser
 from router_agent import Router
 from search_agent import Search
+from langchain_core.prompts import ChatPromptTemplate
+from langchain.retrievers.contextual_compression import ContextualCompressionRetriever
+from langchain_cohere import CohereRerank
+from langchain_community.llms import Cohere
 from answer_grader_agent import AnswerGrader
 from hallucinator_agent import HallucinationGrader
 from grader_agent import Grader
@@ -19,6 +23,9 @@ from ReactAgent.react_agent import React_Agent
 from langgraph.graph import END
 import os
 os.environ["TAVILY_API_KEY"] = "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"
+
+
+
 class LoadDocuments:
     def __init__(self, csv_path):
         self.csv_path = csv_path
@@ -29,7 +36,6 @@ class LoadDocuments:
         # Read the CSV file
         df = pd.read_csv(self.csv_path)
 
-        # Initialize the lists for documents, questions, and translations
         documents = []
         questions = []
         translations = []
@@ -49,7 +55,6 @@ class LoadDocuments:
             row_questions = row['question'].split('?')  
             questions.extend(row_questions)
 
-            # Add the corresponding translation for each question
             translations.extend([row['translation']] * len(row_questions))
 
         return documents, questions, translations
@@ -70,6 +75,7 @@ class MyEmbeddings(EmbeddingFunction):
 class ADAPTIVE_RAG:
     def __init__(self, model, embd_model,  api_key, k, csv_path):
         self.load_documents = LoadDocuments(csv_path)
+        self.chat_memory = []
         self.documents, self.questions, self.translations = self.load_documents.load_documents()
         self.text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
             chunk_size=500, chunk_overlap=0
@@ -82,12 +88,37 @@ class ADAPTIVE_RAG:
             collection_name="rag-chroma",
             embedding=self.embd
         )
+        self.compressor = CohereRerank(model="rerank-english-v3.0")
+        
         self.retriever = self.vectorstore.as_retriever()
+        
+        self.compression_retriever = ContextualCompressionRetriever(
+            base_compressor=self.compressor, base_retriever=self.retriever
+        )
         self.model=model
         self.api_key=api_key
         self.k=k
         self.llm = ChatGroq(model=model, api_key=api_key)
-        self.rag_chain = hub.pull("rlm/rag-prompt") | self.llm | StrOutputParser()
+        self.generator_prompt = """
+        You are an AI assistant for question-answering tasks. Use the provided context along with the previous chat history to deliver a precise and concise response. If the information is insufficient or unclear, acknowledge that you don't know. Keep the answer brief (three sentences or less) while maintaining clarity and relevance.
+
+        """
+        self.human_prompt = """
+            Inputs:
+
+            Question: {question}
+            Context: {context}
+            Chat History: {chat_history}
+            Output:
+            Answer:
+        """
+        self.rag_prompt = ChatPromptTemplate.from_messages(
+            [
+                ("system", self.generator_prompt), 
+                ("human", self.human_prompt)
+            ]
+        )
+        self.rag_chain = self.rag_prompt | self.llm | StrOutputParser()
         self.recursion_limit = 7
         self.recursion_counter = 0
         agent_instance = React_Agent()
@@ -98,9 +129,10 @@ class ADAPTIVE_RAG:
         agent_instance.setup_memory()
 
         self.function_calling_agent = agent_instance.setup_agent()
+        
     def retrieve(self, state):
         question = state["question"]
-        documents = self.retriever.invoke(question)   
+        documents = self.compression_retriever.invoke(question)   
         return {"documents": documents, "question": question}
     def abstraction(self, state):
         content = state["documents"]
@@ -111,7 +143,12 @@ class ADAPTIVE_RAG:
     def generate(self, state):
         question = state["question"]
         documents = state["documents"]
-        generation = self.rag_chain.invoke({"context": documents, "question": question})
+        generation = self.rag_chain.invoke({"context": documents, "question": question, "chat_history": self.chat_memory})
+        if len(self.chat_memory) < 5:
+            self.chat_memory.append(generation)
+        else:
+            self.chat_memory.pop(0)
+            self.chat_memory.append(generation)
         return {"documents": documents, "question": question,"extractions": state["extractions"], "generation": generation}
     def grade_documents(self, state):
         question = state["question"]
@@ -178,8 +215,9 @@ class ADAPTIVE_RAG:
         
     def react_agent_response(self, state):
         question = state["question"]
+        extracted_info = state["extractions"]
         response = self.function_calling_agent.chat(question)
-        return {"generation": str(response)}
+        return {"generation": str(response), "question": question, "extractions": extracted_info}
         
     def track_recursion_and_retrieve(self, state):
         """

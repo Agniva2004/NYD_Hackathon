@@ -4,8 +4,6 @@ from adaptive_rag_class import ADAPTIVE_RAG
 from stategraph import GraphState
 from ReactAgent.react_agent import React_Agent
 from langgraph.graph import END, StateGraph, START
-
-
     
 
 class Workflow:
@@ -22,9 +20,9 @@ class Workflow:
         self.workflow.add_node("generate", self.adaptive_rag.generate)  # generate
         self.workflow.add_node("transform_query", self.adaptive_rag.transform_query)  # transform query
         self.workflow.add_node("abstraction", self.adaptive_rag.abstraction)  # abstraction
-        self.workflow.add_node("track_recursion", self.adaptive_rag.track_recursion_and_retrieve)  # track recursion
-        self.workflow.add_node("end_due_to_limit", self.adaptive_rag.end_due_to_limit)  # End node when recursion limit is reached
-        self.workflow.add_node("react_agent_response", self.adaptive_rag.react_agent_response())
+        # self.workflow.add_node("track_recursion", self.adaptive_rag.track_recursion_and_retrieve)  # track recursion
+        # self.workflow.add_node("end_due_to_limit", self.adaptive_rag.end_due_to_limit)  # End node when recursion limit is reached
+        self.workflow.add_node("react_agent_response", self.adaptive_rag.react_agent_response)
 
         self.workflow.add_conditional_edges(
             START,
@@ -45,14 +43,8 @@ class Workflow:
                 "generate": "generate",
             },
         )
-        self.workflow.add_conditional_edges(
-            "transform_query",
-            self.adaptive_rag.track_recursion_and_retrieve,
-            {
-                "retrieve": "retrieve",
-                "end_due_to_limit": END,
-            },
-        )
+        self.workflow.add_edge("transform_query", "retrieve")
+
         self.workflow.add_conditional_edges(
             "generate",
             self.adaptive_rag.grade_generation_v_documents_and_question,
@@ -75,4 +67,4 @@ class Workflow:
             pprint("\n---\n")
 
         print(value["generation"])
-        return value["generation"]
+        return {"generation": value["generation"], "extracted_info" : value["extractions"]}
