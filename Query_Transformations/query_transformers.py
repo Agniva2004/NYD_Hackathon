@@ -9,7 +9,7 @@ load_dotenv()
 
 class QueryTransformer:
     def __init__(self, model_name="llama3-70b-8192"):
-        self.llm = Groq(model=model_name, api_key=os.getenv("GROQ_API_KEY"))
+        self.llm = Groq(model=model_name, api_key="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")
         Settings.llm = self.llm
         self.query_gen_prompt = PromptTemplate("""\
 You are a helpful assistant that generates multiple search queries based on a \
@@ -40,8 +40,8 @@ if __name__ == "__main__":
     
     queries = transformer.generate_multiple_queries("What is meditation?")
     
-    hyde_result = transformer.generate_hypothetical_answer("What is karma?")
-    print("\nHyDE Generated Answer:", hyde_result)
+    hyde_result = transformer.generate_hypothetical_answer("What is the goal of life?")
+    print("\nHyDE Generated Answer:", hyde_result[0])
 
 
 
