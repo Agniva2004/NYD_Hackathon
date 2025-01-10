@@ -19,3 +19,5 @@ class QuestionRewriter:
     def re_write_question(self, question):
         better_question = self.question_rewriter.invoke({"question": question})
         return better_question
+    
+    

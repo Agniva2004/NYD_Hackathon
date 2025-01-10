@@ -1,3 +1,8 @@
+import sys
+import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from chromadb.utils.embedding_functions import EmbeddingFunction
 from langchain_core.documents import Document
@@ -19,9 +24,8 @@ from grader_agent import Grader
 from question_rewriter import QuestionRewriter
 from abstractor_agent import Abstractor
 from pprint import pprint
-from ReactAgent.react_agent import React_Agent
 from langgraph.graph import END
-import os
+from reflectionAgent import IntrospectiveAgentManager
 os.environ["TAVILY_API_KEY"] = "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"
 
 
@@ -33,7 +37,6 @@ class LoadDocuments:
     def load_documents(self):
         import pandas as pd
 
-        # Read the CSV file
         df = pd.read_csv(self.csv_path)
 
         documents = []
@@ -121,14 +124,16 @@ class ADAPTIVE_RAG:
         self.rag_chain = self.rag_prompt | self.llm | StrOutputParser()
         self.recursion_limit = 7
         self.recursion_counter = 0
-        agent_instance = React_Agent()
 
-        base_data_path = "../Data"  
-        agent_instance.setup_yoga_sutras_tool(base_folder_path=base_data_path)
-
-        agent_instance.setup_memory()
-
-        self.function_calling_agent = agent_instance.setup_agent()
+        self.embed_model = "BAAI/bge-small-en-v1.5"
+        self.agent_manager = IntrospectiveAgentManager(
+            groq_api_key=self.api_key,
+            tavily_api_key=os.getenv("TAVILY_API_KEY"),
+            llm_model=self.model,
+            embed_model_name=self.embed_model,
+        )
+        
+        self.instropection_agent = self.agent_manager.create_introspective_agent(verbose=True)
         
     def retrieve(self, state):
         question = state["question"]
@@ -213,10 +218,18 @@ class ADAPTIVE_RAG:
             pprint("---DECISION: GENERATION IS NOT GROUNDED IN DOCUMENTS, RE-TRY---")
             return "not supported"
         
-    def react_agent_response(self, state):
+    def introspective_agent_response(self, state):
         question = state["question"]
         extracted_info = state["extractions"]
-        response = self.function_calling_agent.chat(question)
+        retrieved_docs = state["documents"]
+        
+        
+        
+        final_prompt = f"""
+            This is the question given by the user : {question}
+            These are the most relevant retrieved documents : {retrieved_docs[0]} 
+        """
+        response = self.instropection_agent.chat(final_prompt)
         return {"generation": str(response), "question": question, "extractions": extracted_info}
         
     def track_recursion_and_retrieve(self, state):
