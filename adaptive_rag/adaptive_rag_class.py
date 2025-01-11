@@ -5,6 +5,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from chromadb.utils.embedding_functions import EmbeddingFunction
+from langchain_experimental.text_splitter import SemanticChunker
 from langchain_core.documents import Document
 from sentence_transformers import SentenceTransformer
 from typing import List
@@ -80,11 +81,13 @@ class ADAPTIVE_RAG:
         self.load_documents = LoadDocuments(csv_path)
         self.chat_memory = []
         self.documents, self.questions, self.translations = self.load_documents.load_documents()
-        self.text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-            chunk_size=500, chunk_overlap=0
-        )
-        self.doc_splits = self.text_splitter.split_documents(self.documents)
+        # self.text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
+        #     chunk_size=500, chunk_overlap=0
+        # )
         self.embd = MyEmbeddings(embd_model)
+        self.text_splitter = SemanticChunker(self.embd)
+        self.doc_splits = self.text_splitter.split_documents(self.documents)
+        
         
         self.vectorstore = Chroma.from_documents(
             documents=self.doc_splits,
