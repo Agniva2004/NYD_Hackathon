@@ -58,10 +58,6 @@ def main():
         api_key=api_key
     )
     
-    
-    
-    
-    
     workflow = Workflow(model, embd_model, api_key, k, csv_path)
 
     question = "What is wrong knowledge?"

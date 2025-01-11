@@ -86,7 +86,13 @@ class React_Agent:
             query_engine_tools=self.query_engine_tools,
             response_synthesizer=self.response_synthesizer,
         )
-
+    def setup_web_search_tool(self) -> None:
+        tavily_tool = TavilyToolSpec(
+            api_key=os.getenv("TAVILY_API_KEY"),
+            
+        )
+        self.query_engine_tools = tavily_tool.to_tool_list
+        
     def print_tools(self) -> None:
         for tool in self.query_engine_tools:
             if hasattr(tool, 'metadata') and tool.metadata.name is not None:
