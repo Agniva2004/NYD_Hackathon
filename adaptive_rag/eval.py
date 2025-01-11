@@ -16,6 +16,80 @@ os.environ["GROQ_API_KEY"] = "gsk_znsgVzFvjuY4asUi6cp0WGdyb3FYLeJkRluGjQhSOP4jSx
 os.environ["TAVILTY_API_KEY"] = "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"
 load_dotenv()
 
+import pandas as pd
+import random
+
+def evaluate_questions(df, workflow, llm, num_questions=20):
+    gita_questions = df[df['book'] == "Bhagwad Gita"].sample(num_questions, random_state=42)
+    patanjali_questions = df[df['book'] == "Patanjali Yoga Sutras"].sample(num_questions, random_state=42)
+
+    results = []
+    correct_verse_count = 0
+    correct_chapter_count = 0
+
+    for idx, row in pd.concat([gita_questions, patanjali_questions]).iterrows():
+        ground_truth = row['augmented_response']
+        verse_gt = str(row['verse'])
+        chapter_gt = str(row['chapter'])
+        question = str(row['question'])
+        
+        inputs = {"question": question}
+        model_output = workflow.run_workflow(inputs)
+        generated_text = model_output['generation']
+        verses_info = model_output['extracted_info']
+        
+
+        messages = [
+        (
+            "system",
+            "You are a helpful assistant designed to combine a generated response with relevant verse information. Your task is to create a complete, coherent, and concrete answer. \
+            The input consists of two parts: \
+            1. **Generated Response**: This is the model-generated answer to the user's query. \
+            2. **Extracted Text**: This contains specific verse information relevant to the query. \
+            Your job is to integrate the extracted text into the generated response seamlessly, ensuring the final output is meaningful and provides comprehensive information. \
+            Use formal language and ensure the response is well-structured and clear."
+        ),
+        ("human", "Generated Response: " + generated_text + "\n" + "Extracted Text: " + verses_info),
+    ]
+
+        rag_response = llm.invoke(messages)
+        rag_response = rag_response.content
+        
+        predicted_verse = verse_extractor(rag_response).strip()
+        predicted_chapter = chapter_extractor(rag_response).strip()
+
+        if predicted_verse == verse_gt:
+            correct_verse_count += 1
+        if predicted_chapter == chapter_gt:
+            correct_chapter_count += 1
+
+        rouge_l, bert_f1, cos_sim, bleu = calculate_evaluation_metrics(ground_truth, rag_response)
+
+        results.append({
+            'book': row['book'],
+            'ground_truth': ground_truth,
+            'model_output': model_output,
+            'verse_gt': verse_gt,
+            'predicted_verse': predicted_verse,
+            'chapter_gt': chapter_gt,
+            'predicted_chapter': predicted_chapter,
+            'rouge_l': rouge_l,
+            'bert_f1': bert_f1,
+            'cos_sim': cos_sim,
+            'bleu': bleu,
+        })
+
+    total_questions = len(results)
+    verse_accuracy = correct_verse_count / total_questions
+    chapter_accuracy = correct_chapter_count / total_questions
+
+    print(f"Verse Extraction Accuracy: {verse_accuracy:.2f}")
+    print(f"Chapter Extraction Accuracy: {chapter_accuracy:.2f}")
+
+    return results, verse_accuracy, chapter_accuracy
+
+
+
 
 def verse_extractor(answer):
     llm = ChatGroq(
@@ -105,3 +179,19 @@ def main():
     )
     
     workflow = Workflow(model, embd_model, api_key, k, csv_path)
+    
+    df = pd.read_csv(csv_path)
+    
+
+    results, verse_accuracy, chapter_accuracy = evaluate_questions(df, workflow = workflow, llm = llm, num_questions=10)
+
+    results_df = pd.DataFrame(results)
+    
+    print("Verse accuracy : ", verse_accuracy)
+    print("Chapter accuracy : ", chapter_accuracy)
+    results_df.to_csv("evaluation_results.csv", index=False)
+    print("Evaluation complete. Results saved to evaluation_results.csv.")
+    
+    
+if __name__ == "__main__":
+    main()

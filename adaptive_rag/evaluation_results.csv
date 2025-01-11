@@ -1,0 +1,134 @@
+book,ground_truth,model_output,verse_gt,predicted_verse,chapter_gt,predicted_chapter,rouge_l,bert_f1,cos_sim,bleu
+Bhagwad Gita,"According to Bhagavad Gita Chapter 3, Verse 40, Lord Krishna explains that desire overpowers the Self by deluding it through the senses, mind, and intellect, thereby veiling the embodied one's wisdom.
+
+The sloka associated with this answer is:
+इन्द्रियाणि मनो बुद्धिरस्याधिष्ठानमुच्यते| एतैर्विमोहयत्येष ज्ञानमावृत्य देहिनम् || 3.40 ||  ","{'generation': ""According to Bhagavad Gita Chapter 3, Verse 40, desire overpowers the Self by deluding it through the senses, mind, and intellect, thereby veiling the embodied one's wisdom."", 'extracted_info': 'Relevant Information: Chapter: 3 Verse: 40 Sanskrit Slokas: इन्द्रियाणि मनो बुद्धिरस्याधिष्ठानमुच्यते| एतैर्विमोहयत्येष ज्ञानमावृत्य देहिनम् || 3.40 ||'}",40,40,3,3,0.3565891427438256,0.7925883531570435,0.8596818,0.0924259434787966
+Bhagwad Gita,"According to Bhagavad Gita Chapter 13, Verse 12, the Lord (भगवान) declares that knowing the Supreme Brahman, which is neither being nor non-being, is the means to attain immortality, thereby obtaining freedom from death.
+
+The sloka associated with this answer is:
+ज्ञेयं यत्तत्प्रवक्ष्यामि यज्ज्ञात्वाऽमृतमश्नुते| अनादिमत्परं ब्रह्म न सत्तन्नासदुच्यते || 13.12 || ","{'generation': 'According to Bhagavad Gita Chapter 13, Verse 12, knowing the Supreme Brahman, which is neither being nor non-being, is the means to attain immortality, thereby obtaining freedom from death.', 'extracted_info': 'Relevant Information: Chapter: 13 Verse: 12 Sanskrit Slokas: ज्ञेयं यत्तत्प्रवक्ष्यामि यज्ज्ञात्वाऽमृतमश्नुते| अनादिमत्परं ब्रह्म न सत्तन्नासदुच्यते || 13.12 ||'}",12,12,13,13,0.46268656260971275,0.9421043395996094,0.865174,0.160201741881753
+Bhagwad Gita,"According to the Bhagavad Gita, Chapter 10, Verse 25, Krishna compared God with Bhrigu, a great sage.
+
+The sloka associated with this answer is:
+महर्षीणां भृगुरहं गिरामस्म्येकमक्षरम्| यज्ञानां जपयज्ञोऽस्मि स्थावराणां हिमालयः || 10.25 || ","{'generation': 'According to the Bhagavad Gita, Chapter 10, Verse 25, Krishna compared God with Bhrigu, a great sage.', 'extracted_info': 'Relevant Information: Chapter: 10 Verse: 25 Sanskrit Slokas: महर्षीणां भृगुरहं गिरामस्म्येकमक्षरम्| यज्ञानां जपयज्ञोऽस्मि स्थावराणां हिमालयः || 10.25 ||'}",25,25,10,10,0.34710743404958677,0.931094765663147,0.78192616,0.07528978955138255
+Bhagwad Gita,"According to Bhagavad Gita, Chapter 3, Verse 37, the primary cause of sin is desire (and anger), which are both of the quality of Rajas (one of the three gunas or modes of nature).
+
+The sloka associated with this answer is:
+काम एष क्रोध एष रजोगुणसमुद्भवः| महाशनो महापाप्मा विद्ध्येनमिह वैरिणम् || 3.37 ||  ","{'generation': 'According to Bhagavad Gita, Chapter 3, Verse 37, the primary cause of sin is desire (and anger), which are both of the quality of Rajas (one of the three gunas or modes of nature).', 'extracted_info': 'Relevant Information: Chapter: 3 Verse: 37 Sanskrit Slokas: काम एष क्रोध एष रजोगुणसमुद्भवः| महाशनो महापाप्मा विद्ध्येनमिह वैरिणम् || 3.37 ||'}",37,37,3,3,0.34838709260020817,0.7914002537727356,0.8306552,0.11446808059905242
+Bhagwad Gita,"According to Bhagavad Gita Chapter 8, Verse 12, the speaker Lord Krishna advises to practice concentration by:
+
+* Closing all the gates (presumably the senses)
+* Confining the mind in the heart (focusing the mind)
+* Fixing the life-breath in the head (regulating the breath)
+
+By following these steps, one can engage in the practice of concentration.
+
+The sloka associated with this answer is:
+सर्वद्वाराणि संयम्य मनो हृदि निरुध्य च| मूर्ध्न्याधायात्मनः प्राणमास्थितो योगधारणाम् || 8.12 || ","{'generation': 'To practice Yoga and concentration, one should follow the steps advised by Lord Krishna in Bhagavad Gita Chapter 8, Verse 12: close all the gates (senses), confine the mind in the heart (focus the mind), and fix the life-breath in the head (regulate the breath). This will help engage in the practice of concentration. Additionally, regular practice and dispassion, as mentioned in Patanjali Yoga Sutras, Chapter 1, Verse 12, are essential to quiet the fluctuations of the mind.', 'extracted_info': 'Based on the provided documents, I will extract the most relevant chapter, verse, and Sanskrit slokas.\n\nRelevant Information: Chapter: 8 Verse: 12 Sanskrit Slokas: सर्वद्वाराणि संयम्य मनो हृदि निरुध्य च| मूर्ध्न्याधायात्मनः प्राणमास्थितो योगधारणाम् || 8.12 ||'}",12,12,8,8,0.4133333285333334,0.9204061627388,0.78611934,0.18214237525833454
+Bhagwad Gita,"According to Bhagavad Gita, Chapter 5, Verse 9, spoken by भगवान (Bhagavan), the senses do not perceive the mind. The verse states: ""Speaking, letting go, seizing, opening, and closing the eyes, one should be convinced that the senses move among the sense-objects."" This implies that the senses operate on external objects and not on the internal mind.
+
+The sloka associated with this answer is:
+प्रलपन्विसृजन्गृह्णन्नुन्मिषन्निमिषन्नपि| इन्द्रियाणीन्द्रियार्थेषु वर्तन्त इति धारयन् || 5.9 ||  ","{'generation': 'According to Bhagavad Gita, Chapter 5, Verse 9, the senses do not perceive the mind, as they operate on external objects and not on the internal mind.', 'extracted_info': 'Relevant Information: Chapter: 5 Verse: 9 Sanskrit Slokas: प्रलपन्विसृजन्गृह्णन्नुन्मिषन्निमिषन्नपि| इन्द्रियाणीन्द्रियार्थेषु वर्तन्त इति धारयन् || 5.9 ||'}",9,9,5,5,0.4102564052567756,0.9271525740623474,0.854317,0.10965697313028956
+Bhagwad Gita,"Based on Bhagavad Gita Chapter 6, Verse 2, it can be inferred that Yoga (also referred to as Karma Yoga) is not the same as the path of knowledge (Jnana Yoga). The verse states that ""renunciation"" is what is meant by Yoga, implying that it involves giving up one's thoughts and desires. This is in contrast to the path of knowledge, which involves gaining insight and understanding through scriptural study and contemplation.
+
+The sloka associated with this answer is:
+यं संन्यासमिति प्राहुर्योगं तं विद्धि पाण्डव| न ह्यसंन्यस्तसङ्कल्पो योगी भवति कश्चन || 6.2 || ","{'generation': ""The difference between the path of knowledge (Jnana Yoga) and Karma Yoga lies in their approaches. Karma Yoga involves giving up one's thoughts and desires, whereas Jnana Yoga involves gaining insight and understanding through scriptural study and contemplation."", 'extracted_info': 'Relevant Information: Chapter: 6 Verse: 2 Sanskrit Slokas: यं संन्यासमिति प्राहुर्योगं तं विद्धि पाण्डव| न ह्यसंन्यस्तसङ्कल्पो योगी भवति कश्चन || 6.2 ||'}",2,2,6,6,0.4571428522292245,0.9231184720993042,0.8282021,0.2133423043477275
+Bhagwad Gita,"According to Bhagavad Gita, Chapter 7, Verse 10, the speaker भगवान (Lord) states: ""I am the intelligence of the intelligent..."" In this context, intelligence refers to the divine consciousness or the source of all knowledge and understanding.
+
+The sloka associated with this answer is:
+बीजं मां सर्वभूतानां विद्धि पार्थ सनातनम्| बुद्धिर्बुद्धिमतामस्मि तेजस्तेजस्विनामहम् || 7.10 || ","{'generation': 'According to the Bhagavad Gita, Chapter 7, Verse 10, intelligence refers to the divine consciousness or the source of all knowledge and understanding.', 'extracted_info': 'Relevant Information: Chapter: 7 Verse: 10 Sanskrit Slokas: बीजं मां सर्वभूतानां विद्धि पार्थ सनातनम्| बुद्धिर्बुद्धिमतामस्मि तेजस्तेजस्विनामहम् || 7.10 ||'}",10,10,7,7,0.599999995008,0.9542081356048584,0.8791754,0.33330308118133756
+Bhagwad Gita,"According to Bhagavad Gita Chapter 7, Verse 21, spoken by भगवान (God), the answer is no, there is no restriction on the way to worship God. God makes the devotee's faith firm and unflinching, regardless of the form their faith takes. This suggests that God is open to being worshipped in various ways, as long as the devotion is genuine and sincere.
+
+The sloka associated with this answer is:
+यो यो यां यां तनुं भक्तः श्रद्धयार्चितुमिच्छति| तस्य तस्याचलां श्रद्धां तामेव विदधाम्यहम् || 7.21 || ","{'generation': ""According to Bhagavad Gita Chapter 7, Verse 21, there is no restriction on the way to worship God, as God makes the devotee's faith firm and unflinching, regardless of the form their faith takes. This suggests that God is open to being worshipped in various ways, as long as the devotion is genuine and sincere."", 'extracted_info': 'Relevant Information: Chapter: 7 Verse: 21 Sanskrit Slokas: यो यो यां यां तनुं भक्तः श्रद्धयार्चितुमिच्छति| तस्य तस्याचलां श्रद्धां तामेव विदधाम्यहम् || 7.21 ||'}",21,21,7,7,0.4892086280999948,0.934310257434845,0.7570063,0.180287852134736
+Bhagwad Gita,"According to Bhagavad Gita Chapter 9, Verse 19, the speaker (भगवान) states: ""I am immortality and also death, existence and non-existence, O Arjuna."" Therefore, the answer to the question is: The speaker, the Supreme Being, is the cause of both immortality and death.
+
+The sloka associated with this answer is:
+तपाम्यहमहं वर्षं निगृह्णाम्युत्सृजामि च| अमृतं चैव मृत्युश्च सदसच्चाहमर्जुन || 9.19 || ","{'generation': 'The speaker, the Supreme Being, is the cause of both immortality and death.', 'extracted_info': 'Relevant Information: Chapter: 9 Verse: 19 Sanskrit Slokas: तपाम्यहमहं वर्षं निगृह्णाम्युत्सृजामि च| अमृतं चैव मृत्युश्च सदसच्चाहमर्जुन || 9.19 ||'}",19,19,9,9,0.43859648628347186,0.9341815114021301,0.8340919,0.19549492601404583
+Patanjali Yoga Sutras,"According to Patanjali Yoga Sutras, Chapter 3, Verse 33, knowledge about everything can be gained through intuition (pratyabhijñā). Intuition is a foreground of discriminative knowledge that allows one to gain knowledge of all.
+
+The Sanskrit sloka associated with this answer is:
+प्रातिभाद्वा सर्वम्","{'generation': 'According to Patanjali Yoga Sutras, knowledge about everything can be gained through intuition (pratyabhijñā), which is a foreground of discriminative knowledge that allows one to gain knowledge of all.', 'extracted_info': 'Relevant Information: Chapter: 3 Verse: 33 Sanskrit Slokas: प्रातिभाद्वा सर्वम्'}",33,33,3,3,0.47524752001176357,0.93175208568573,0.8743956,0.13019566460901724
+Patanjali Yoga Sutras,"Based on Chapter 1, Verse 17 of the Patanjali Yoga Sutras, the levels of meditative absorption (or elevated cognition) are:
+
+1. Analytical thinking (वितर्क, vitarka)
+2. Insight (विचार, vicāra)
+3. Bliss (अनंद, ananda)
+4. Sense of self (अस्मितारूप, āsmi-tā-rūpa)
+
+These four levels are sequential stages of meditative absorption, which are essential for stilling the mind and achieving higher states of consciousness.
+
+The Sanskrit sloka associated with this answer is:
+वितर्कविचारानन्दास्मितारूपानुगमात्संप्रज्ञातः","{'generation': 'The levels of meditative absorption, according to Chapter 1, Verse 17 of the Patanjali Yoga Sutras, are: 1. Analytical thinking (वितर्क, vitarka), 2. Insight (विचार, vicāra), 3. Bliss (अनंद, ananda), and 4. Sense of self (अस्मितारूप, āsmi-tā-rūpa). These four levels are sequential stages of meditative absorption, essential for stilling the mind and achieving higher states of consciousness.', 'extracted_info': 'Based on the retrieved documents, I extracted the most relevant information as follows:\n\nRelevant Information: Chapter: 1 Verse: 17 Sanskrit Slokas: वितर्कविचारानन्दास्मितारूपानुगमात्संप्रज्ञातः'}",17,17,1,1,0.5323740957942136,0.9361438751220703,0.87747556,0.20679401764463265
+Patanjali Yoga Sutras,"According to Patanjali Yoga Sutras, chapter 3, verse 50, self-mastery (omniscience and mastery) is not the direct cause of happiness. In fact, the sutra states that even detachment from this self-mastery is required for the realization of kaivalya, or pristine consciousness. This suggests that self-mastery may not be the primary source of happiness.
+
+The Sanskrit sloka associated with this answer is:
+तद्वैराग्यादपि दोषबीजक्षये कैवल्यम्","{'generation': 'According to Patanjali Yoga Sutras, chapter 3, verse 50, self-mastery is not the direct cause of happiness. In fact, detachment from self-mastery is required for the realization of kaivalya, or pristine consciousness.', 'extracted_info': 'Relevant Information: Chapter: 3 Verse: 50 Sanskrit Slokas: तद्वैराग्यादपि दोषबीजक्षये कैवल्यम्'}",50,50,3,3,0.36220471957343914,0.9055817723274231,0.7366636,0.05426431043194954
+Patanjali Yoga Sutras,"Based on Patanjali Yoga Sutras, Chapter 2, Verse 46, the psychophysical posture (Asana) is qualified as that which actualizes both steadiness (Sthiras) and ease (Sukham). In this context, Asana refers to a physical posture that is practiced with awareness, control, and balance, bringing about a state of internal harmony and stability.
+
+The qualities of psychophysical posture, as mentioned in this verse, are:
+
+1. Steadiness (Sthiras): Stability, firmness, and immobility of the body and mind.
+2. Ease (Sukham): Smoothness, gentleness, and comfort, both physically and mentally.
+
+A psychophysical posture that embodies these qualities allows for a sense of balance, relaxation, and inner awareness, preparing the practitioner for further spiritual practices.
+
+The Sanskrit sloka associated with this answer is:
+स्थिरसुखमासनम्","{'generation': 'A psychophysical posture qualifies as one that actualizes both steadiness (Sthiras) and ease (Sukham), referring to a physical posture practiced with awareness, control, and balance, bringing about a state of internal harmony and stability. The qualities of psychophysical posture are steadiness, which involves stability, firmness, and immobility of the body and mind, and ease, which involves smoothness, gentleness, and comfort, both physically and mentally.', 'extracted_info': 'Relevant Information: Chapter: 2 Verse: 46 Sanskrit Slokas: स्थिरसुखमासनम्'}",46,46,2,2,0.6163521963023615,0.9191096425056458,0.90617114,0.34535281365633586
+Patanjali Yoga Sutras,"Based on Chapter 2, Verse 18 of the Patanjali Yoga Sutras, the answer is:
+
+The characteristics of Drishya (the seen) are luminosity (sattva), activity (rajas), and inertia (tamas). The world is composed of elements and senses. The relationship between the Seer (Drasta) and the Seen (Drishya) is that the Seer perceives the phenomenal world through awareness. The cause of sensual experience is the composition of the world, which serves the purpose of both sensual experience and liberation.
+
+The Sanskrit sloka associated with this answer is:
+प्रकाशक्रियास्थितिशीलं भूतेन्द्रियात्मकं भोगापवर्गार्थं दृश्यम्","{'generation': 'The characteristics of Drishya (the seen) are luminosity (sattva), activity (rajas), and inertia (tamas). The world is composed of elements and senses. The relationship between the Seer (Drasta) and the Seen (Drishya) is that the Seer perceives the phenomenal world through awareness. The cause of sensual experience is the composition of the world, which serves the purpose of both sensual experience and liberation.', 'extracted_info': 'Relevant Information: Chapter: 2 Verse: 18 Sanskrit Slokas: प्रकाशक्रियास्थितिशीलं भूतेन्द्रियात्मकं भोगापवर्गार्थं दृश्यम्'}",18,18,2,2,0.5714285665112246,0.9430175423622131,0.9128674,0.2791721499775886
+Patanjali Yoga Sutras,"According to Chapter 3, Verse 48, yes, through the practice of Yoga (samyama over sense organs), one can acquire the ability to perceive things beyond the range of the senses, including body-independent perception and control over fundamental facets of matter (mula prakriti*).
+
+The Sanskrit sloka associated with this answer is:
+ततो मनोजवित्वं विकरण भावः प्रधानजयश्च","{'generation': 'According to Chapter 3, Verse 48, yes, through the practice of Yoga (samyama over sense organs), one can acquire the ability to perceive things beyond the range of the senses, including body-independent perception and control over fundamental facets of matter (mula prakriti*).', 'extracted_info': 'Relevant Information: Chapter: 3 Verse: 48 Sanskrit Slokas: ततो मनोजवित्वं विकरण भावः प्रधानजयश्च'}",48,48,3,3,0.4237288087331227,0.9037216901779175,0.7843497,0.11383093292542944
+Patanjali Yoga Sutras,"Based on Chapter 2, Verse 5 of the Patanjali Yoga Sutras, here is a concise and precise answer:
+
+Ignorance (avidyā) is the state where one confuses:
+
+* Impermanence (anitya) with permanence
+* Impurity (aśuci) with purity
+* Distress (duḥkha) with happiness
+* Non-self (anātman) with self
+
+In this state of ignorance, one mistakenly identifies temporary and ephemeral things as permanent, pure, happy, and eternal, and conversely, permanent and eternal things as impermanent, impure, and unhappy. This confusion is the state of ignorance.
+
+The Sanskrit sloka associated with this answer is:
+अनित्याशुचिदुःखानात्मसु नित्यशुचिसुखात्मख्यातिरविद्या","{'generation': 'Ignorance (avidyā) is a state where one confuses impermanence with permanence, impurity with purity, distress with happiness, and non-self with self. In this state, one mistakenly identifies temporary and ephemeral things as permanent, pure, happy, and eternal, and conversely, permanent and eternal things as impermanent, impure, and unhappy. This confusion is the state of ignorance, which leads to a state of confusion.', 'extracted_info': 'Relevant Information: Chapter: 2 Verse: 5 Sanskrit Slokas: अनित्याशुचिदुःखानात्मसु नित्यशुचिसुखात्मख्यातिरविद्या'}",5,5,2,2,0.2733812899663579,0.8163881897926331,0.84583557,0.0488692637463735
+Patanjali Yoga Sutras,"Based on Chapter 1, Verse 16, the attribute of an elevated level of dispassion is ""गुणवैतृष्ण्यम्"" (gunavaitṛṣṇyam), which translates to ""ultimate dispassion"" or ""being free from attachment to the gunas (natural tendencies)"".
+
+When the highest level of dispassion is reached, ""पुरुषख्यातेर्गुणवैतृष्ण्यम्"" (puruṣakhyātera guṇavaitṛṣṇyam) or ""pure awareness can recognize its independence from the fundamental qualities of nature"", indicating that the individual's awareness or consciousness (puruṣa) is no longer influenced by the natural tendencies (gunas) and is able to recognize its true nature.
+
+The Sanskrit sloka associated with this answer is:
+तत्परं पुरुषख्यातेर्गुणवैतृष्ण्यम्","{'generation': 'The attribute of an elevated level of dispassion is ""गुणवैतृष्ण्यम्"" (gunavaitṛṣṇyam), which translates to ""ultimate dispassion"" or ""being free from attachment to the gunas (natural tendencies)"". When the highest level of dispassion is reached, pure awareness can recognize its independence from the fundamental qualities of nature, indicating that the individual\'s awareness or consciousness is no longer influenced by the natural tendencies and is able to recognize its true nature.', 'extracted_info': 'Relevant Information: Chapter: 1 Verse: 16 Sanskrit Slokas: तत्परं पुरुषख्यातेर्गुणवैतृष्ण्यम्'}",16,16,1,1,0.5276073570627423,0.9283301830291748,0.8597652,0.2707518259862273
+Patanjali Yoga Sutras,"Based on Chapter 3, Verse 7 of the Patanjali Yoga Sutras, the subtle paths of Yoga are:
+
+1. Concentration (dharana)
+2. Absorption (dhyana)
+3. Integration (samadhi)
+
+There are three subtle limbs of Yoga.
+
+The eight limbs of Yoga (ashta-angas) are divided into three categories:
+
+1. External limbs:
+	* Five Yamas (abstinences)
+	* Five Niyamas (observances)
+2. Inner limbs:
+	* Asana (posture)
+	* Pranayama (breath control)
+	* Pratyahara (withdrawal of the senses)
+3. Subtle limbs:
+	* Concentration (dharana)
+	* Absorption (dhyana)
+	* Integration (samadhi)
+
+The Sanskrit sloka associated with this answer is:
+त्रयमन्तरङ्गं पूर्वेभ्यः","{'generation': 'The subtle paths of Yoga are concentration (dharana), absorption (dhyana), and integration (samadhi). There are three subtle limbs of Yoga. The eight limbs of Yoga (ashta-angas) are divided into three categories: external limbs, inner limbs, and subtle limbs.', 'extracted_info': 'Relevant Information: Chapter: 2 Verse: 29 Sanskrit Slokas: यमनियमासनप्राणायामप्रत्याहारधारणाध्यानसमाधयोऽष्टावङ्गानि'}",7,29,3,2,0.2442748041955598,0.8449918627738953,0.9025398,0.1434293065192018
+Patanjali Yoga Sutras,"According to Chapter 3, Verse 6 of the Patanjali Yoga Sutras, Samyama (or pure state of cognition) should be applied sequentially on various stages or planes of refined cognition. This suggests that the practice of Yoga should be done in a step-by-step manner, gradually ascending through various levels of refinement, to achieve a deeper understanding and realization.
+
+The Sanskrit sloka associated with this answer is:
+तस्य भूमिषु विनियोगः","{'generation': 'Practicing Yoga sequentially is essential because it allows an individual to gradually ascend through various levels of refinement, achieving a deeper understanding and realization. This step-by-step approach helps to focus the mind, eliminate distractions, and cultivate a deeper understanding of the object or concept being focused on, ultimately leading to wisdom and self-realization.', 'extracted_info': 'Relevant Information: Chapter: 3 Verse: 6 Sanskrit Slokas: तस्य भूमिषु विनियोगः'}",6,6,3,3,0.437956199520486,0.8933313488960266,0.73583865,0.15989415689891184
