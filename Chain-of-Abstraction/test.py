@@ -1,4 +1,4 @@
-from Retriever_agent import RetrievalAgent
+from experiment_agent import RetrievalAgent
 import pandas as pd
 from nltk.translate.bleu_score import sentence_bleu
 from rouge_score import rouge_scorer
