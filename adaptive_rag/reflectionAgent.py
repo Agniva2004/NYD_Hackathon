@@ -50,7 +50,7 @@ class IntrospectiveAgentManager:
         return introspective_worker_agent.as_agent(verbose=verbose)
 
 def main():
-    groq_api_key = "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"
+    groq_api_key = "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"
     tavily_api_key = "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"
     llm_model = "llama3-8b-8192"
     embed_model_name = "BAAI/bge-small-en-v1.5"

@@ -5,6 +5,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 from dotenv import load_dotenv
 from workflow import Workflow
+import time
 from adaptive_rag_class import LoadDocuments
 # from rouge import Rouge
 # from bert_score import score as bert_score  
@@ -12,7 +13,7 @@ from adaptive_rag_class import LoadDocuments
 # from sklearn.metrics.pairwise import cosine_similarity
 # from sentence_transformers import SentenceTransformer
 from langchain_groq import ChatGroq
-os.environ["GROQ_API_KEY"] = "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"
+os.environ["GROQ_API_KEY"] = "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"
 os.environ["TAVILTY_API_KEY"] = "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"
 load_dotenv()
 # def calculate_evaluation_metrics(ground_truth, model_output):
@@ -59,6 +60,8 @@ def main():
     )
     
     workflow = Workflow(model, embd_model, api_key, k, csv_path)
+    
+    start = time.time()
 
     question = "What is wrong knowledge?"
     inputs = {"question": question}
@@ -83,6 +86,9 @@ def main():
     rag_response = llm.invoke(messages)
     rag_response = rag_response.content
     # ground_truth = "False knowledge arises from misperception, which is not based on reality."
+    
+    end = time.time()
+    print("Time taken : ", end - start)
         
     # average_rouge_l, average_bert_score, average_cosine_similarity, average_bleu_score = calculate_evaluation_metrics(ground_truth, rag_response) 
     print("Pipeline response: \n" , rag_response)

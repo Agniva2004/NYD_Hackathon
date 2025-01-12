@@ -233,7 +233,7 @@ class ADAPTIVE_RAG:
             These are the most relevant retrieved documents : {retrieved_docs[0]} 
         """
         response = self.instropection_agent.chat(final_prompt)
-        return {"generation": str(response), "question": question, "extractions": extracted_info}
+        return {"generation": str(response), "question": question, "extractions": extracted_info, "documents": retrieved_docs}
         
     def track_recursion_and_retrieve(self, state):
         """

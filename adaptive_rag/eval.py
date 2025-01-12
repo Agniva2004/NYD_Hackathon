@@ -12,7 +12,8 @@ from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction  # For BL
 from sklearn.metrics.pairwise import cosine_similarity
 from sentence_transformers import SentenceTransformer
 from langchain_groq import ChatGroq
-os.environ["GROQ_API_KEY"] = "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"
+from ragas_evaluation import llm_eval
+os.environ["GROQ_API_KEY"] = "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"
 os.environ["TAVILTY_API_KEY"] = "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"
 load_dotenv()
 
@@ -37,7 +38,10 @@ def evaluate_questions(df, workflow, llm, num_questions=20):
         model_output = workflow.run_workflow(inputs)
         generated_text = model_output['generation']
         verses_info = model_output['extracted_info']
-        
+        documents = model_output['documents']
+        retrieved_contents = []
+        retrieved_contents.append(documents[0].page_content)
+        retrieved_contents.append(documents[1].page_content)
 
         messages = [
         (
@@ -55,6 +59,8 @@ def evaluate_questions(df, workflow, llm, num_questions=20):
         rag_response = llm.invoke(messages)
         rag_response = rag_response.content
         
+        ragas_evaluation_result = llm_eval(rag_response, question, ground_truth, retrieved_contents)
+        
         predicted_verse = verse_extractor(rag_response).strip()
         predicted_chapter = chapter_extractor(rag_response).strip()
 
@@ -65,6 +71,7 @@ def evaluate_questions(df, workflow, llm, num_questions=20):
 
         rouge_l, bert_f1, cos_sim, bleu = calculate_evaluation_metrics(ground_truth, rag_response)
 
+        print("RAGAS evaluation result: \n", ragas_evaluation_result)
         results.append({
             'book': row['book'],
             'ground_truth': ground_truth,
@@ -77,7 +84,10 @@ def evaluate_questions(df, workflow, llm, num_questions=20):
             'bert_f1': bert_f1,
             'cos_sim': cos_sim,
             'bleu': bleu,
+            'context recall': ragas_evaluation_result['context_recall'],
+            'faithfulness': ragas_evaluation_result['faithfulness'],
         })
+        
 
     total_questions = len(results)
     verse_accuracy = correct_verse_count / total_questions
@@ -95,7 +105,8 @@ def verse_extractor(answer):
     llm = ChatGroq(
         model="llama3-70b-8192",
         temperature=0,
-        api_key=os.getenv("GROQ_API_KEY")
+        api_key=os.getenv("GROQ_API_KEY"), 
+        max_retries=10
     )
     messages = [
         ("system", """You are an expert who extracts the verse from the given text.
@@ -183,7 +194,7 @@ def main():
     df = pd.read_csv(csv_path)
     
 
-    results, verse_accuracy, chapter_accuracy = evaluate_questions(df, workflow = workflow, llm = llm, num_questions=10)
+    results, verse_accuracy, chapter_accuracy = evaluate_questions(df, workflow = workflow, llm = llm, num_questions=50)
 
     results_df = pd.DataFrame(results)
     

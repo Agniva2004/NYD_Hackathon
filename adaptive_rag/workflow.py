@@ -67,4 +67,4 @@ class Workflow:
             pprint("\n---\n")
 
         # print(value["generation"])
-        return {"generation": value["generation"], "extracted_info" : value["extractions"]}
+        return {"generation": value["generation"], "extracted_info" : value["extractions"], "documents" : value["documents"]}
