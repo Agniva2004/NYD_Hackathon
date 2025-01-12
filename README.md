@@ -2,7 +2,7 @@
 
 ## Overview
 
-**NYD Hackathon** is a project created during the New Year's Day Hackathon, showcasing a sophisticated Retrieval-Augmented Generation (RAG) pipeline designed for spiritual texts. This pipeline, named **MARSA** (Modified Adaptive RAG for Spiritual Assistance), provides accurate and contextually rich responses to user queries related to the Bhagavad Gita and Patanjali Yoga Sutras. It integrates advanced NLP techniques with multiple specialized agents to ensure high-quality outputs.
+**Agentic Retrieval-Augmented Generation (RAG)** based pipeline designed mainly for **The NYD Hackathon**. This pipeline, named **MARSA** (Modified Adaptive RAG for Spiritual Assistance), provides accurate and contextually rich responses to user queries related to the Bhagavad Gita and Patanjali Yoga Sutras. It integrates advanced NLP techniques with multiple specialized agents to ensure high-quality outputs.
 
 ---
 
@@ -39,22 +39,18 @@ The pipeline is evaluated using:
 .
 ├── adaptive_rag                 # Contains the main RAG pipeline
 ├── Chain-of-Abstraction         # Chain of abstraction agent
-├── Chunking_TextSplitter        # Tools for chunking text
+├── Chunking_TextSplitter        # chunking text
 ├── Combined_Data                # Aggregated data for training and testing
 ├── Data                         # Raw data files
 ├── Data_Augmentation            # Scripts for data augmentation
 ├── Data_Connector               # Connectors for external data sources
 ├── Embedder                     # Embedding utilities
-├── LLMCompiler                  # Tools for LLM integration
+├── LLMCompiler                  # LLMCompiler pipeline
 ├── Query_Transformations        # Query transformation utilities
 ├── ReactAgent                   # ReAct agent implementation
-├── ReRanker                     # Reranking tools
-├── Retriever                    # Retrieval mechanisms
+├── ReRanker                     # Reranking utilities
+├── Retriever                    # Retrieval utilities
 ├── VectorStore                  # Vector store utilities
-├── __pycache__                  # Compiled Python files
-├── app.py                       # Streamlit application entry point
-├── adaptive_class_main.py       # Main script for running the pipeline
-├── eval.py                      # Evaluation script
 ├── requirements.txt             # Python dependencies
 └── README.md                    # Project documentation
 ```
@@ -63,10 +59,6 @@ The pipeline is evaluated using:
 
 ## Getting Started
 
-### Prerequisites
-Ensure you have the following installed:
-- Python 3.8+
-- pip
 
 ### Installation
 
@@ -119,6 +111,19 @@ Ensure you have the following installed:
 
 ---
 
+**Setting Up API Keys**
+To run the pipeline, create a .env file in the root directory(it is already provided, if api exhausts then one needs to provide his own) and add the required API keys in the following format:
+```bash
+GROQ_API_KEYS=<your_groq_api_key>
+COHERE_API_KEY=<your_cohere_api_key>
+HUGGINGFACEHUB_API_TOKEN=<your_huggingface_api_token>
+PINECONE_API_KEY=<your_pinecone_api_key>
+TAVILY_API_KEY=<your_tavily_api_key>
+LANGCHAIN_API_KEY=<your_langchain_api_key>
+SERPER_API_KEY=<your_serper_api_key>
+```
+
+
 ## Contributing
 
 Contributions are welcome! To contribute:
@@ -137,6 +142,12 @@ Contributions are welcome! To contribute:
    git push origin feature-name
    ```
 5. Open a pull request.
+   
+
+**Conclusion**
+
+MARSA serves as a robust demonstration of how advanced NLP techniques can be leveraged to provide meaningful spiritual assistance. Designed to handle nuanced queries and maintain contextual accuracy, MARSA represents a significant step in blending technology with ancient wisdom. We look forward to seeing how this pipeline evolves and contributes to broader applications in the future. Your feedback and contributions are invaluable to further enhance this project.
+
 
 ---
 
