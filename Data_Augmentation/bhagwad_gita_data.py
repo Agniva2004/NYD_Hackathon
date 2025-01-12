@@ -4,13 +4,10 @@ import os
 from tqdm import tqdm
 from dotenv import load_dotenv
 
-# Load environment variables
 load_dotenv()
 
-# List of API keys
 api_keys = os.getenv("GROQ_API_KEYS").split(",")
 
-# Function to get the next available API key
 class APIKeyManager:
     def __init__(self, keys):
         self.keys = keys
@@ -77,7 +74,6 @@ def process_csv(input_csv, output_csv):
         augmented_responses.append(augmented_response)
         print(augmented_response)
 
-    # Assign augmented responses to the corresponding rows
     df["augmented_response"] = augmented_responses
 
     df.to_csv(output_csv, index=False)

@@ -176,7 +176,7 @@ def calculate_evaluation_metrics(ground_truth, model_output):
 
 def main():
     model = "llama3-70b-8192"
-    embd_model="sentence-transformers/all-MiniLM-L6-v2"
+    embd_model="BAAI/bge-small-en-v1.5"
     k = 3
     csv_path = r'..\Combined_Data\Merged_Bhagwad_Gita_and_Patanjali_Yoga_Sutras.csv'
     
