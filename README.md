@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Agentic Retrieval-Augmented Generation (RAG)** based pipeline designed mainly for **The NYD Hackathon**. This pipeline, named **MARSA** (Modified Adaptive RAG for Spiritual Assistance), provides accurate and contextually rich responses to user queries related to the Bhagavad Gita and Patanjali Yoga Sutras. It integrates advanced NLP techniques with multiple specialized agents to ensure high-quality outputs.
+**Agentic Retrieval-Augmented Generation (RAG)** based pipeline designed mainly for **The NYD Hackathon**. This pipeline, named **MARSA (Modified Adaptive RAG for Spiritual Assistance)**, provides accurate and contextually rich responses to user queries related to the Bhagavad Gita and Patanjali Yoga Sutras. It integrates advanced NLP techniques with multiple specialized agents to ensure high-quality outputs.
 
 ![Pipeline Diagram](pipeline.png)
 
