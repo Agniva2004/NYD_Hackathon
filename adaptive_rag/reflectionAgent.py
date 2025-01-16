@@ -7,6 +7,28 @@ from llama_index.core.agent import FunctionCallingAgentWorker
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.tools.tavily_research.base import TavilyToolSpec
 
+import hashlib
+from gptcache import Cache
+from langchain.globals import set_llm_cache
+from gptcache.manager.factory import manager_factory
+from gptcache.processor.pre import get_prompt
+from langchain_community.cache import GPTCache
+
+def get_hashed_name(name):
+    return hashlib.sha256(name.encode()).hexdigest()
+
+
+def init_gptcache(cache_obj: Cache, llm: str):
+    hashed_llm = get_hashed_name(llm)
+    cache_obj.init(
+        pre_embedding_func=get_prompt,
+        data_manager=manager_factory(manager="map", data_dir=f"map_cache_{hashed_llm}"),
+    )
+
+
+set_llm_cache(GPTCache(init_gptcache))
+
+
 class IntrospectiveAgentManager:
     def __init__(self, groq_api_key: str, tavily_api_key: str, llm_model: str, embed_model_name: str):
         self.groq_api_key = groq_api_key

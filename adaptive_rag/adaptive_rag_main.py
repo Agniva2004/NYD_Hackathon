@@ -13,9 +13,30 @@ from adaptive_rag_class import LoadDocuments
 # from sklearn.metrics.pairwise import cosine_similarity
 # from sentence_transformers import SentenceTransformer
 from langchain_groq import ChatGroq
+from prompt_optimizer.poptim import EntropyOptim
 os.environ["GROQ_API_KEY"] = "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"
 os.environ["TAVILTY_API_KEY"] = "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"
 load_dotenv()
+import hashlib
+from gptcache import Cache
+from langchain.globals import set_llm_cache
+from gptcache.manager.factory import manager_factory
+from gptcache.processor.pre import get_prompt
+from langchain_community.cache import GPTCache
+
+def get_hashed_name(name):
+    return hashlib.sha256(name.encode()).hexdigest()
+
+
+def init_gptcache(cache_obj: Cache, llm: str):
+    hashed_llm = get_hashed_name(llm)
+    cache_obj.init(
+        pre_embedding_func=get_prompt,
+        data_manager=manager_factory(manager="map", data_dir=f"map_cache_{hashed_llm}"),
+    )
+
+
+set_llm_cache(GPTCache(init_gptcache))
 # def calculate_evaluation_metrics(ground_truth, model_output):
 
 #     rouge = Rouge()
@@ -46,7 +67,7 @@ load_dotenv()
   
 def main():
     model = "llama3-70b-8192"
-    embd_model="BAAI/bge-small-en-v1.5"
+    embd_model="sentence-transformers/all-MiniLM-L6-v2"
     k = 3
     csv_path = r'..\Combined_Data\Merged_Bhagwad_Gita_and_Patanjali_Yoga_Sutras.csv'
     
@@ -63,7 +84,13 @@ def main():
     
     start = time.time()
 
-    question = "What is wrong knowledge?"
+    question = "What are the profound ways in which spiritual practices, such as meditation, prayer, or mindfulness, can help individuals cultivate inner peace, resilience, and a deeper connection to their purpose in life?"
+    
+    word_count = len(question.split())
+    p_optimizer = EntropyOptim(verbose=True, p=0.1)
+    if word_count > 30:
+        question = p_optimizer(question)['content']
+        print("Optimized question: ", question)
     inputs = {"question": question}
     model_output = workflow.run_workflow(inputs)
     

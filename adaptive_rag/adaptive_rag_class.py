@@ -28,7 +28,26 @@ from pprint import pprint
 from langgraph.graph import END
 from reflectionAgent import IntrospectiveAgentManager
 os.environ["TAVILY_API_KEY"] = "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"
+import hashlib
+from gptcache import Cache
+from langchain.globals import set_llm_cache
+from gptcache.manager.factory import manager_factory
+from gptcache.processor.pre import get_prompt
+from langchain_community.cache import GPTCache
 
+def get_hashed_name(name):
+    return hashlib.sha256(name.encode()).hexdigest()
+
+
+def init_gptcache(cache_obj: Cache, llm: str):
+    hashed_llm = get_hashed_name(llm)
+    cache_obj.init(
+        pre_embedding_func=get_prompt,
+        data_manager=manager_factory(manager="map", data_dir=f"map_cache_{hashed_llm}"),
+    )
+
+
+set_llm_cache(GPTCache(init_gptcache))
 
 
 class LoadDocuments:
@@ -128,7 +147,7 @@ class ADAPTIVE_RAG:
         self.recursion_limit = 7
         self.recursion_counter = 0
 
-        self.embed_model = "BAAI/bge-small-en-v1.5"
+        self.embed_model = "sentence-transformers/all-MiniLM-L6-v2"
         self.agent_manager = IntrospectiveAgentManager(
             groq_api_key=self.api_key,
             tavily_api_key=os.getenv("TAVILY_API_KEY"),

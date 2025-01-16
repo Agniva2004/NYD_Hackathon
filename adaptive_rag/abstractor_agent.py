@@ -22,7 +22,26 @@ from pprint import pprint
 from sentence_transformers import SentenceTransformer
 from langchain_core.prompts import ChatPromptTemplate
 from langchain import hub
+import hashlib
+from gptcache import Cache
+from langchain.globals import set_llm_cache
+from gptcache.manager.factory import manager_factory
+from gptcache.processor.pre import get_prompt
+from langchain_community.cache import GPTCache
 
+def get_hashed_name(name):
+    return hashlib.sha256(name.encode()).hexdigest()
+
+
+def init_gptcache(cache_obj: Cache, llm: str):
+    hashed_llm = get_hashed_name(llm)
+    cache_obj.init(
+        pre_embedding_func=get_prompt,
+        data_manager=manager_factory(manager="map", data_dir=f"map_cache_{hashed_llm}"),
+    )
+
+
+set_llm_cache(GPTCache(init_gptcache))
 
 
 from pydantic import BaseModel, Field
@@ -69,3 +88,13 @@ class Abstractor:
     def abstract(self, content):
         abstracted_info=self.abstractor.invoke({"content": content})  
         return abstracted_info
+    
+if __name__ == "__main__":
+    abstractor = Abstractor(model="llama3-70b-8192", api_key="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")
+    content = """
+    Chapter 1: Arjuna Vishada Yoga
+    Verse 1:
+    Dhritarashtra said: O Sanjaya, assembled in the holy land of Kurukshetra and desirous of battle, what did my sons and the sons of Pandu do?
+    """
+    response = abstractor.abstract(content)
+    print(response)

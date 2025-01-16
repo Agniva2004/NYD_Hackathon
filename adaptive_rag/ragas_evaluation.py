@@ -7,6 +7,28 @@ from ragas.llms import LangchainLLMWrapper
 from dotenv import load_dotenv
 import os
 
+import hashlib
+from gptcache import Cache
+from langchain.globals import set_llm_cache
+from gptcache.manager.factory import manager_factory
+from gptcache.processor.pre import get_prompt
+from langchain_community.cache import GPTCache
+
+def get_hashed_name(name):
+    return hashlib.sha256(name.encode()).hexdigest()
+
+
+def init_gptcache(cache_obj: Cache, llm: str):
+    hashed_llm = get_hashed_name(llm)
+    cache_obj.init(
+        pre_embedding_func=get_prompt,
+        data_manager=manager_factory(manager="map", data_dir=f"map_cache_{hashed_llm}"),
+    )
+
+
+set_llm_cache(GPTCache(init_gptcache))
+
+
 os.environ["GROQ_API_KEY"] = "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"
 
 def llm_eval(response, query, reference, documents, model="mixtral-8x7b-32768"):
