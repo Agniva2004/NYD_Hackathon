@@ -40,35 +40,16 @@ def initialize_workflow():
     return Workflow(model, embd_model, api_key, k, csv_path)
 
 
-try:
-    past_chats = joblib.load(os.path.join(DATA_FOLDER, "past_chats_list"))
-except FileNotFoundError:
-    past_chats = {}
-
 st.set_page_config(page_title="Yogi Bot", page_icon="🧘‍♂️", layout="wide")
 st.title("🧘‍♂️ MARSA: Patanjali Yoga Sutras & Bhagwad Gita Chatbot")
 st.write("Ask questions about the Patanjali Yoga Sutras and Bhagwad Gita to receive insightful responses.")
 
-with st.sidebar:
-    st.write("## Past Chats")
-    new_chat_id = str(time.time())
-    chat_id = st.selectbox(
-        label="Pick a past chat or start a new one",
-        options=[new_chat_id] + list(past_chats.keys()),
-        format_func=lambda x: past_chats.get(x, "New Chat"),
-        index=0,
-    )
-    if chat_id == new_chat_id:
-        st.session_state.chat_title = f"Chat-{new_chat_id}"
-    else:
-        st.session_state.chat_title = past_chats[chat_id]
+
 
 workflow = initialize_workflow()
 
-try:
-    st.session_state.messages = joblib.load(os.path.join(DATA_FOLDER, f"{chat_id}-messages"))
-except FileNotFoundError:
-    st.session_state.messages = []
+
+st.session_state.messages = []
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"], avatar=message.get("avatar")):
@@ -102,6 +83,4 @@ if prompt := st.chat_input("Your question here..."):
 
     st.session_state.messages.append({"role": MODEL_ROLE, "content": rag_response, "avatar": AI_AVATAR_ICON})
 
-    past_chats[chat_id] = st.session_state.chat_title
-    joblib.dump(past_chats, os.path.join(DATA_FOLDER, "past_chats_list"))
-    joblib.dump(st.session_state.messages, os.path.join(DATA_FOLDER, f"{chat_id}-messages"))
+
