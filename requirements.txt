@@ -21,3 +21,5 @@ llama-index-embeddings-instructor
 llama-index-tools-tavily-research
 tavily-python
 llama-hub
+gptcache
+

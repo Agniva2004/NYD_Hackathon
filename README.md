@@ -101,7 +101,7 @@ The pipeline is evaluated using:
    Run the pipeline for user queries:
 
    ```bash
-   python adaptive_class_main.py
+   python adaptive_rag_main.py
    ```
 
 3. **Evaluation**:
