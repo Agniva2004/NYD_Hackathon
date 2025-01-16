@@ -22,4 +22,4 @@ llama-index-tools-tavily-research
 tavily-python
 llama-hub
 gptcache
-
+prompt-optimizer
